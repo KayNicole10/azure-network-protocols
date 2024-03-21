@@ -12,7 +12,7 @@ In this tutorial, I observe various network traffic to and from Azure Virtual Ma
 - Microsoft Azure (Virtual Machines)
 - Remote Desktop
 - Command-Line Tools
-- Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
+- Network Protocols (SSH, RDP, HTTP/S, ICMP)
 - Wireshark (Protocol Analyzer)
 
 <h2>Operating Systems Used </h2>
@@ -27,7 +27,7 @@ In this tutorial, I observe various network traffic to and from Azure Virtual Ma
 - Step 3: Analyze ICMP Traffic between the VMs 
 - Step 4: Deny and Allow ICMP Traffic from Ubuntu Server 
 - Step 5: Analyze SSH Traffic from Ubuntu Server
-- Step 6: 
+- Step 6: Analyze RDP Traffic
 <h2>Actions and Observations</h2>
 
 <h3>Step 1: Create Windows 10 and Ubuntu Server Virtual Machines</h3>
@@ -90,22 +90,37 @@ Next, return to the Azure portal, access the network security groups settings, a
 <img src="https://i.imgur.com/v1K6BnH.png" height="80%" width="80%" alt="halt"/>
 </p>
 <p>
-
+Return to the "Inbound Rules" section within the network security groups settings in the Azure portal. This time, select the option to "Allow" ICMP traffic. Once this change is applied, observe the requests and replies between the two VMs flow successfully. This action essentially reverses the previous block, enabling ICMP traffic to pass between the VMs unhindered. By monitoring the traffic flow, you can confirm that communication between the VMs has been restored to its original state.
+</p>
+<p>
+<img src="https://i.imgur.com/JXHvgJS.png" height="80%" width="80%" alt="Allow"/>
+</p>
+<p>
+<img src="https://i.imgur.com/ytN67e0.png" height="80%" width="80%" alt="confirm"/>
 </p>
 <br />
 
+<h3>Step 5: Analyze SSH Traffic from Ubuntu Server</h3> 
+
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+Next, I will use the SSH protocol to connect to VM2 (Ubuntu Server). Simply open PowerShell and type "ssh", followed by the name or username of VM2, and then its private IP address. You'll then be prompted to enter the password for VM2. Once authenticated, you will have successfully logged into VM2 remotely using SSH. This protocol provides a secure and encrypted means of accessing the Ubuntu Server from a remote location. 
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<img src="https://i.imgur.com/Wii1j9v.png" height="80%" width="80%" alt="SSH protocol"/>
+</p>
+<p>
+While logged into VM2 via SSH protocol, I can execute various Linux commands, create new files, or perform other tasks.  SSH traffic is being generated and captured in Wireshark in real time as I  interact with the terminal. 
+<p>
+<img src="https://i.imgur.com/cP9MVV9.png" height="80%" width="80%" alt="commands"/>
 </p>
 <br />
 
+<h3>Step 6: Analyze RDP Traffic</h3>
+
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/N4PdGUd.png" height="80%" width="80%" alt="RDP traffic"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Lastly, I will examine RDP traffic in Wireshark. To do this, enter "rdp" or "tcp.port==3389" into the green search bar at the top of the Wireshark interface. This filtering will isolate and display all Remote Desktop Protocol (RDP) traffic generated from both of the virtual machine connections.
 </p>
 <br />
